@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th>Номер заказа</th>
+        <th>Дата</th>
+        <th>ФИО</th>
+          <th>Город</th>
+        <th>Профессия</th>
+          <th>Виды работ</th>
+        <th>Объем/м2</th>
+          <th>Примечания</th>
+        <th>Договор</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>{{order.id}}</td>
+        <td>{{order.born}}</td>
+           <td>{{order.fio}}</td>
+          <td>{% for item in order.city.all %}<p>{{item}}</p>{%endfor%}</td>
+           <td>{% for item in order.proffesion.all %}<p>{{item}}</p>{%endfor%}</td>
+        <td>{% for item in order.work.all %}<p>{{item}}</p>{%endfor%}</td>
+           <td>{{order.size}}</td>
+        <td>{{order.description}}</td>
+          <td>{{order.contract}}</td>
+        <td>{{order.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

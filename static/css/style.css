@@ -1,15 +1,71 @@
 @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
 
-body{
-	margin: 0;
-	padding: 0;
-	background: #fff;
+/* -----------------------------------------------
+Version: 0.1 [DD MM YY]
 
-	color: #fff;
-	font-family: Arial;
-	font-size: 12px;
+SMACSS [Scalable Modular Architecture for CSS]
+Reference: http://smacss.com/
+
+CATEGORIES:
+1. Master      - Default elements style redefinitions
+2. Layout      - Stacking/Placement of elements
+3. Modules     - Module wise style definitions
+4. States      - Interaction states styling
+
+5. Reset       - Reset Browser default styles
+6. Fonts       - Fontface style definitions
+
+7. Responsive  - Responsive layout styles
+8. Comp. Fixes - Browser compatabilty fixes
+----------------------------------------------- */
+
+/*-------------------------------------------------
+MASTER: IMPORTING STYLESHEETS
+-------------------------------------------------*/
+@import url("layout.css");
+@import url("module.css");
+@import url("state.css");
+
+@import url("reset.css");
+@import url("fonts.css");
+
+@import url("responsive.css");
+@import url("browser-fixes.css");
+
+/*-------------------------------------------------
+MASTER: COMMON STYLES REDEFINITION
+-------------------------------------------------*/
+body {
+	font-family: "", Arial, sans-serif;
+	font-size: 14px;
+ 	z-index: 1;
+	text-shadow: 0 1px 0 #;
 }
+
+h1, h2, h3, h4, h5, h6 { text-rendering: optimizelegibility; text-align: center;}
+
+a {
+	color: #4c4c4c;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+::selection {
+  background: #FE57A1;
+  color: white;
+  text-shadow: none;
+}
+
+
+/*-------------------------------------------------
+MASTER: FORM ELEMENTS
+-------------------------------------------------*/
+form input[type="text"] { background: #fff; }
+
 
 .body{
 	position: absolute;
@@ -139,4 +195,24 @@ body{
 
 ::-moz-input-placeholder{
    color: rgba(255,255,255,0.6);
+}
+.home-links {
+    text-align: center;
+}
+.home-links li {
+    display:inline-block;
+    margin:0 5px;
+}
+
+.home-link-new-order {
+    background: #84afd4;
+    width: 200px;
+
+.home-link-new-order a{
+    color: #fff;
+    padding: 10px;
+
+.home-links ul li a{
+    display: inline-block;
+    margin: 0 5px;
 }

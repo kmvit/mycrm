@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Заказы</h2>
+  <p>Здесь отображаются все заказы, которые имеются на данный момент в системе</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Номер заказа</th>
+        <th>Дата</th>
+        <th>Статус</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in order_list %}
+    {% if item.status == '1' %}
+      <tr class="success">
+          <td><a href="{% url 'orders:order_detail' pk=item.id%}">{{item.id}}</a></td>
+        <td>{{item.born}}</td>
+        <td>Выполнен</td>
+      </tr>
+    {% else %}
+      <tr class="danger">
+        <td><a href="{% url 'orders:order_detail' pk=item.id%}">{{item.id}}</a></td>
+        <td>{{item.born}}</td>
+        <td>Не выполнен</td>
+      </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+ <div class="home-link-new-order">
+      <a href="#">Новый заказ</a>
+  </div>
+{% endblock %}

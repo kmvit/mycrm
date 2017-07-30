@@ -25,7 +25,7 @@ SECRET_KEY = '#(v152kwvu(pcq$c&!sjg_-czzw)78962jcgq^+(s&mnb6i)fu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ovz1.justscoundrel.6el81.vps.myjino.ru']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,21 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mycrm.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/srv/django/mycrm/templates',],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+
 
 WSGI_APPLICATION = 'mycrm.wsgi.application'
 
@@ -120,15 +106,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = '/static/'
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
 
 try:
     from .local_settings import *
