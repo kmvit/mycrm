@@ -1,6 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView, CreateView
+from .models import *
+from .forms import *
 
 @login_required
 def home(request):
@@ -18,3 +21,13 @@ def login(request):
     else:
         # Отображение страницы с ошибкой
         return HttpResponseRedirect("/account/invalid/")
+
+class MasterList(ListView):
+    model = Master
+
+class MasterDetail(DetailView):
+    model = Master
+    
+class MasterAdd(CreateView):
+    model = Master
+    form_class = MasterAddForm

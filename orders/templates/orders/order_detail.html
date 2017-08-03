@@ -1,32 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
-<table class="table">
-    <thead>
-      <tr>
-        <th>Номер заказа</th>
-        <th>Дата</th>
-        <th>ФИО</th>
-          <th>Город</th>
-        <th>Профессия</th>
-          <th>Виды работ</th>
-        <th>Объем/м2</th>
-          <th>Примечания</th>
-        <th>Договор</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>{{order.id}}</td>
-        <td>{{order.born}}</td>
-           <td>{{order.fio}}</td>
-          <td>{% for item in order.city.all %}<p>{{item}}</p>{%endfor%}</td>
-           <td>{% for item in order.proffesion.all %}<p>{{item}}</p>{%endfor%}</td>
-        <td>{% for item in order.work.all %}<p>{{item}}</p>{%endfor%}</td>
-           <td>{{order.size}}</td>
-        <td>{{order.description}}</td>
-          <td>{{order.contract}}</td>
-        <td>{{order.status}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="panel panel-bd lobidisable">
+   <div class="panel-heading">
+      <div class="btn-group" id="buttonexport">
+         <a href="#">
+            <h4>Заказы</h4>
+         </a>
+      </div>
+   </div>
+   <div class="panel-body">
+      <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
+      <div class="btn-group">
+         <div class="buttonexport">
+            <a href="#" class="btn btn-add" data-toggle="modal" data-target="#addtask"><i class="fa fa-plus"></i> Добавить заказ</a>  
+         </div>
+      </div>
+      <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
+      <div class="table-responsive">
+         <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
+            <thead>
+               <tr class="info">
+                  <th>Номер заказа</th>
+                  <th>Дата</th>
+                  <th>ФИО</th>
+                  <th>Город</th>
+                  <th>Профессия</th>
+                  <th>Виды работ</th>
+                  <th>Объем/м2</th>
+                  <th>Примечания</th>
+                  <th>Договор</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>{{order.id}}</td>
+                  <td>{{order.born}}</td>
+                  <td>{{order.fio}}</td>
+                  <td>
+                     {% for item in order.city.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>
+                     {% for item in order.proffesion.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>
+                     {% for item in order.work.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>{{order.size}}</td>
+                  <td>{{order.description}}</td>
+                  <td>{{order.contract}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
 {% endblock %}

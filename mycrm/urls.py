@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^orders/', include('orders.urls', namespace='orders', app_name='orders')),
-
+    url(r'^masters/', include('masters.urls', namespace='masters', app_name='masters')),
     url(r'^accounts/login/$', auth_views.login),
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='home'),

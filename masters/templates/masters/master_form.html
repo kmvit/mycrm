@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="form-horizontal">
+                                    <fieldset>
+                                       <!-- Text input-->
+                                       {% for field in form %}
+                                       <div class="col-md-6 form-group">
+                                          <label class="control-label">{{field.label}}</label>
+                                          <input type="text" placeholder="{{field.name}}" class="form-control">
+                                       </div>
+                                       {% endfor %}
+                                       
+                                       <div class="col-md-12 form-group user-form-group">
+                                          <div class="pull-right">
+                                             <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+                                             <button type="submit" class="btn btn-add btn-sm">Update</button>
+                                          </div>
+                                       </div>
+                                    </fieldset>
+                                 </form>
+{% endblock %}
