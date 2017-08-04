@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.shortcuts import reverse
 from django.db import models
 from datetime import datetime
 
@@ -39,13 +39,12 @@ class Order(models.Model):
     born = models.DateTimeField(default=datetime.now, verbose_name='Дата')
     fio = models.CharField(max_length=300, verbose_name='ФИО')
     city = models.ManyToManyField(City, verbose_name='Город')
-    proffesion = models.ManyToManyField(Profession, verbose_name='Профессия')
     work = models.ManyToManyField(Work, verbose_name='Виды работ')
     size = models.IntegerField(verbose_name='Объем')
     description = models.TextField(verbose_name='Примечания')
     contract = models.BooleanField(default=False, verbose_name='Договор')
-    master_send_sms = models.ManyToManyField(Master, verbose_name='Кому отправить СМС')
-    master_changed = models.ManyToManyField(Master, related_name='master_changed', verbose_name='Мастер исполнитель')
+    master_send_sms = models.ManyToManyField(Master, blank=True, verbose_name='Кому отправить СМС')
+    master_changed = models.ManyToManyField(Master, related_name='master_changed', blank=True, verbose_name='Мастер исполнитель')
     CHOICES = (
     (u'1', u'Выполнен'),
     (u'2', u'Невыполнен')
@@ -56,5 +55,6 @@ class Order(models.Model):
     class Meta:
         verbose_name='Заказ'
         verbose_name_plural='    Заказы'
-    
-    
+
+    def get_absolute_url(self):
+        return reverse('orders:order_send', kwargs={'order_id': self.id})

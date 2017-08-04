@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="panel panel-bd lobidisable">
+   <div class="panel-heading">
+      <div class="btn-group" id="buttonexport">
+         <a href="#">
+            <h4>Мастера</h4>
+         </a>
+      </div>
+   </div>
+   <div class="panel-body">
+      <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
+      <div class="table-responsive">
+          <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="sms">
+            {% csrf_token %}
+         <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
+            <thead>
+               <tr class="info">
+                  <th>Выбрать</th>
+                  <th>ФИО</th>
+                  <th>Тел</th>
+                  <th>Город</th>
+                  <th>В бригаде</th>
+                  <th>Договор</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for item in master_list%}
+               <tr>
+                  <td>
+                     <div class="checkbox checkbox-info">
+                        <input id="checkbox{{item.id}}" name="master" value="{{item.id}}" type="checkbox">
+                        <label for="checkbox{{item.id}}">{{item.id}}</label>
+                     </div>
+                  </td>
+                  <td><a href="{% url 'masters:master_detail' pk=item.id%}">{{item}}</a></td>
+                  <td>{{item.phone}}</td>
+                  <td>{% for item in item.city.all %}{{item}}<br/>{% endfor %}</td>
+                  <td>{{item.size}}</td>
+                  <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+              <div class="col-md-12 form-group user-form-group">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-add btn-sm">Отправить</button>
+                    </div>
+                </div>
+          </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

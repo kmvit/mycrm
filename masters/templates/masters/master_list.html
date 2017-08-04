@@ -15,6 +15,17 @@
             <a href="{% url 'masters:master_add' %}" class="btn btn-add"><i class="fa fa-plus"></i> Добавить мастера</a>  
          </div>
       </div>
+       <div class="pull-right">
+         <form action="{% url 'orders:order_filter' %}" method="GET">
+            <select name="select">
+                {% for item in work_list %}
+               <option value="{{item.id}}">{{item}}</option>
+                {% endfor %}
+               <option value="2">Невыполнен</option>
+            </select>
+            <button type="submit" class="btn btn-add btn-sm">Фильтровать</button>
+         </form>
+      </div>
       <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
       <div class="table-responsive">
          <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
