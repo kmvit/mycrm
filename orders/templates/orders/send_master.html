@@ -3,9 +3,7 @@
 <div class="panel panel-bd lobidisable">
    <div class="panel-heading">
       <div class="btn-group" id="buttonexport">
-         <a href="#">
-            <h4>Мастера</h4>
-         </a>
+            <h4>Отправка СМС</h4>
       </div>
    </div>
    <div class="panel-body">
@@ -42,6 +40,12 @@
                {% endfor %}
             </tbody>
          </table>
+          <div class="panel-heading">
+            <div class="btn-group" id="buttonexport">
+                <h4>Сообщение</h4>
+            </div>
+        </div>
+         <textarea name="message" cols="40" rows="3">{{order.fio}}. {% for item in order.city.all %}{{item}}{% endfor %}. {% for item in order.work.all %}{{item}}{% endfor %}</textarea>
               <div class="col-md-12 form-group user-form-group">
                     <div class="pull-right">
                         <button type="submit" class="btn btn-add btn-sm">Отправить</button>

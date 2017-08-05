@@ -16,3 +16,11 @@ class OrderAddForm(ModelForm):
             self.fields[myField].widget.attrs['class'] = 'form-control'
         self.fields['contract'].widget.attrs.update({'class': 'myfieldclass'})
 
+class OrderEditForm(ModelForm):
+    class Meta:
+        model = Order
+        fields='__all__'
+        exclude = ['master_send_sms', 'master_changed']
+        widgets = {
+            'work': SelectMultiple()
+        }

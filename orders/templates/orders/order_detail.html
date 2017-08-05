@@ -11,9 +11,6 @@
    <div class="panel-body">
       <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
       <div class="btn-group">
-         <div class="buttonexport">
-            <a href="#" class="btn btn-add" data-toggle="modal" data-target="#addtask"><i class="fa fa-plus"></i> Добавить заказ</a>  
-         </div>
       </div>
       <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
       <div class="table-responsive">
@@ -24,11 +21,12 @@
                   <th>Дата</th>
                   <th>ФИО</th>
                   <th>Город</th>
-                  <th>Профессия</th>
+                  <th>Статус</th>
                   <th>Виды работ</th>
                   <th>Объем/м2</th>
                   <th>Примечания</th>
                   <th>Договор</th>
+                  <th>Действия</th>
                </tr>
             </thead>
             <tbody>
@@ -42,9 +40,7 @@
                      {%endfor%}
                   </td>
                   <td>
-                     {% for item in order.proffesion.all %}
-                     <p>{{item}}</p>
-                     {%endfor%}
+                     {% if order.status == '1' %}<span class="label-custom label label-default">Выполнен</span>{% else %}<span class="label-warning label label-default">Невыполнен</span>{% endif %}
                   </td>
                   <td>
                      {% for item in order.work.all %}
@@ -53,11 +49,49 @@
                   </td>
                   <td>{{order.size}}</td>
                   <td>{{order.description}}</td>
-                  <td>{{order.contract}}</td>
+                  <td>{% if order.contract %}Есть{% else %}Нет{% endif %}</td>
+                  <td>
+                     <a class="btn btn-add btn-xs" href="{% url 'orders:order_edit' pk=order.id %}"><i class="fa fa-pencil"></i></a>
+                     <a class="btn btn-danger btn-xs" href="{% url 'orders:order_delete' pk=order.id %}"><i class="fa fa-trash-o"></i> </a>
+                  </td>
                </tr>
             </tbody>
          </table>
       </div>
+      <div class="btn-group">
+         <div class="buttonexport">
+            <h4>Мастера, которым отправлено смс.</h4>
+         </div>
+      </div>
+
+         <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
+            <thead>
+               <tr class="info">
+                  <th>ФИО</th>
+                  <th>Тел</th>
+                  <th>Город</th>
+                  <th>В бригаде</th>
+                  <th>Договор</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for item in master_list%}
+               {% if order.master_changed == item.id %}
+               <tr class="success">
+                  {% else %}
+               <tr>
+                  {% endif %}
+
+                  <td><a href="">{{item}}</a></td>
+                  <td>{{item.phone}}</td>
+                  <td>{% for item in item.city.all %}{{item}}<br/>{% endfor %}</td>
+                  <td>{{item.size}}</td>
+                  <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+    
    </div>
 </div>
 {% endblock %}

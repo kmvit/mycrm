@@ -44,7 +44,7 @@ class Order(models.Model):
     description = models.TextField(verbose_name='Примечания')
     contract = models.BooleanField(default=False, verbose_name='Договор')
     master_send_sms = models.ManyToManyField(Master, blank=True, verbose_name='Кому отправить СМС')
-    master_changed = models.ManyToManyField(Master, related_name='master_changed', blank=True, verbose_name='Мастер исполнитель')
+    master_changed = models.IntegerField(blank=True,null=True, verbose_name='Мастер исполнитель')
     CHOICES = (
     (u'1', u'Выполнен'),
     (u'2', u'Невыполнен')

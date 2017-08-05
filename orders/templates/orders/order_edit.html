@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="panel panel-bd lobidisable">
+   <div class="panel-heading">
+      <div class="btn-group" id="buttonexport">
+         <a href="#">
+            <h4>Добавить заказ</h4>
+         </a>
+      </div>
+   </div>
+   <div class="panel-body">
+        <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+            <fieldset>
+                {% for field in form %}
+                <div class="col-md-6 form-group">
+                    <label class="control-label">{{field.label_tag}}</label>
+                    {{field}}
+                </div>
+                {% endfor %}
+                 <label class="control-label"><label for="id_master_changed">Мастер исполнитель:</label></label>
+               
+               <select name="master_changed">
+                   {% for item in master_list %}
+                    <option value={{item.id}}>{{item.fio}}</option>
+                    {% endfor %}
+                </select>
+                <!-- Text input-->
+                <div class="col-md-12 form-group user-form-group">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-add btn-sm">Изменить</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+      </div>
+   </div>
+{% endblock %}
+ 
