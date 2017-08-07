@@ -1,6 +1,7 @@
 from django.forms import ModelForm, CheckboxSelectMultiple, SelectMultiple
 from .models import *
 
+
 class OrderAddForm(ModelForm):
     class Meta:
         model = Order
@@ -24,3 +25,18 @@ class OrderEditForm(ModelForm):
         widgets = {
             'work': SelectMultiple()
         }
+        
+class CityForm(ModelForm):
+    class Meta:
+        model = City
+        fields='__all__'
+
+class ProffesionForm(ModelForm):
+    class Meta:
+        model = Profession
+        fields='__all__'
+        
+class WorkForm(ModelForm):
+    class Meta:
+        model = Work
+        fields='__all__'

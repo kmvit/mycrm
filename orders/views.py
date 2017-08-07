@@ -65,6 +65,7 @@ class OrderSend(ListView):
     template_name = 'orders/send_master.html'
 
 
+@login_required
 def order_filter(request):
     """Фильтр заказов"""
     if 'select' in request.GET and request.GET['select']=='all':
@@ -74,7 +75,7 @@ def order_filter(request):
     context = {'order_list':order_list}
     return render(request, 'orders/order_list.html', context)
 
-
+@login_required
 def master_filter(request):
     """Фильтр мастеров"""
     if 'select' in request.GET and request.GET['select'] == 'all':
@@ -90,12 +91,6 @@ def order_send(request, order_id):
     context = {'master_list':master_list, 'order':order}
     return render (request, 'orders/send_master.html', context)
 
-def sendsmsru(idsender, subject, to):
-    """Функция отправки смс"""
-    subject = subject.replace(" ", "+")
-    url = "http://sms.ru/sms/send?api_id=%s&text=%s&to=%s" % (idsender, subject, to)
-    res = urlopen(url)
-    
     
 def order_sms(request, order_id):
     """Запись мастеров в заказ"""
@@ -108,7 +103,7 @@ def order_sms(request, order_id):
         order.master_send_sms = request.POST.getlist('master')
         order.save()
         idsender = "83F28281-2704-6800-9A35-468003306417"
-        subject = quote('Привет')
+        subject = quote(message)
         to = '79289557566'
         
         #return HttpResponse(phone_number)
@@ -129,17 +124,23 @@ def order_master_chenged(request, order_id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        
 
+@method_decorator(login_required, name='dispatch')
+class AddCity(CreateView):
+    model = City
+    form_class = CityForm
+    success_url = reverse_lazy('orders:order_list')
 
+@method_decorator(login_required, name='dispatch')
+class AddProffesion(CreateView):
+    model = Profession
+    form_class = ProffesionForm
+    success_url = reverse_lazy('orders:order_list')
 
+@method_decorator(login_required, name='dispatch')
+class AddWork(CreateView):
+    model = Work
+    form_class = WorkForm
+    success_url = reverse_lazy('orders:order_list')
 
-
-
-def change_master(request):
-    parser = OptionParser()
-    parser.add_option("-i", "--idsender", dest="idsender", default="83F28281-2704-6800-9A35-468003306417",
-                      help="ID user on sms.ru", metavar="IDSENDER")
-    parser.add_option("-t", "--to", dest="to", default="79289557566", help="to telephone number", metavar="TO")
-    parser.add_option("-s", "--subject", dest="subject", default="Hello", help="Name of subject", metavar="SUBJECT")
-    (options, args) = parser.parse_args()
-    sendsms(options.idsender, options.subject, options.to)

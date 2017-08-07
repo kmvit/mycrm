@@ -16,12 +16,15 @@
          </div>
       </div>
        <div class="pull-right">
-         <form action="{% url 'orders:order_filter' %}" method="GET">
-            <select name="select">
-                {% for item in work_list %}
-               <option value="{{item.id}}">{{item}}</option>
+         <form action="{% url 'masters:master_filter' %}" method="GET">
+             <select name="select">
+               <option value="all">Все</option>
+                {% for item in profession_list %}
+                <option class="proffesion" disabled>{{item}}</option>
+                {% for i in item.work_set.all %}
+               <option value="{{i.id}}">{{i}}</option>
                 {% endfor %}
-               <option value="2">Невыполнен</option>
+                {% endfor %}
             </select>
             <button type="submit" class="btn btn-add btn-sm">Фильтровать</button>
          </form>

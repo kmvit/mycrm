@@ -4557,15 +4557,14 @@ table.text-center th {
     margin-bottom: 5px;
 }
 .btn-add {
-    background: #009688;
+    background: #d1561c;
     color: #fbfbfb !important;
-    border: 1px solid #009688;
-    ;
+    border: 1px solid #f6861f;
 }
 .btn-add:hover {
-    background: #009688;
+    background: #8b5e3b;
     color: #fbfbfb;
-    border: 1px solid #009688;
+    border: 1px solid #8b5e3b;
 }
 .card {
     margin-bottom: 20px;
@@ -4919,4 +4918,7 @@ table.text-center th {
     }
 }
 
-
+.proffesion{
+    color:#434343;
+    font-size:16px;
+}

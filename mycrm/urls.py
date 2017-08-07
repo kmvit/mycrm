@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from masters.views import *
+from orders.views import *
 from django.contrib.auth import views as auth_views
 
 
@@ -27,6 +28,10 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login),
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='home'),
+    url(r'^cityadd$', AddCity.as_view(), name='add_city'),
+    url(r'^proffesionadd$', AddProffesion.as_view(), name='add_proffesion'),
+    url(r'^workadd$', AddWork.as_view(), name='add_work'),
+    url(r'^logout$', logout_view, name='logout'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
