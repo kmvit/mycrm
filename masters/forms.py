@@ -11,5 +11,8 @@ class MasterAddForm(ModelForm):
         for myfield in self.fields:
             self.fields[myfield].widget.attrs['class'] = 'form-control'
         self.fields['contract'].widget.attrs.update({'class': 'myfieldclass'})
+        self.fields['zamer'].widget.attrs.update({'class': 'myfieldclass'})
+        self.fields['profession'].widget.attrs.update({'id': 'category'})
+        self.fields['work'].widget.attrs.update({'id': 'subcategory'})
 
 

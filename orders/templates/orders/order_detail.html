@@ -19,13 +19,17 @@
                <tr class="info">
                   <th>Номер заказа</th>
                   <th>Дата</th>
-                  <th>ФИО</th>
+                  <th>Клиент</th>
+                  <th>Телефон</th>
                   <th>Город</th>
-                  <th>Статус</th>
-                  <th>Виды работ</th>
-                  <th>Объем/м2</th>
+                  <th>Вид работ</th>
+                  <th>Объем</th>
+                  <th>Передали</th>
+                  <th>Взял</th>
+                  <th>Начало работ</th>
                   <th>Примечания</th>
-                  <th>Договор</th>
+                  <th>Статус</th>
+                  <th>Вход</th>
                   <th>Действия</th>
                </tr>
             </thead>
@@ -34,13 +38,11 @@
                   <td>{{order.id}}</td>
                   <td>{{order.born}}</td>
                   <td>{{order.fio}}</td>
+                  <td>{{order.phone}}</td>
                   <td>
                      {% for item in order.city.all %}
                      <p>{{item}}</p>
                      {%endfor%}
-                  </td>
-                  <td>
-                     {% if order.status == '1' %}<span class="label-custom label label-default">Выполнен</span>{% else %}<span class="label-warning label label-default">Невыполнен</span>{% endif %}
                   </td>
                   <td>
                      {% for item in order.work.all %}
@@ -48,8 +50,19 @@
                      {%endfor%}
                   </td>
                   <td>{{order.size}}</td>
+                  <td>
+                     {% for item in order.master_send_sms.all %}
+                        {{item.id}},
+                     {%endfor%}
+                  </td>
+                  <td>{{order.master_changed|default:"Пусто"}}</td>
+                  <td>{{order.start}}</td>
                   <td>{{order.description}}</td>
-                  <td>{% if order.contract %}Есть{% else %}Нет{% endif %}</td>
+                  <td>
+                     {{order.get_status_display}}
+                  </td>
+                  <td>{{order.enter}}</td>
+                  
                   <td>
                      <a class="btn btn-add btn-xs" href="{% url 'orders:order_edit' pk=order.id %}"><i class="fa fa-pencil"></i></a>
                      <a class="btn btn-danger btn-xs" href="{% url 'orders:order_delete' pk=order.id %}"><i class="fa fa-trash-o"></i> </a>
@@ -64,13 +77,19 @@
          </div>
       </div>
         <div class="table-responsive">
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'orders:master_changed' order_id=order.id %}">
+            {% csrf_token %}
          <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
             <thead>
                <tr class="info">
+                  <th>Выбрать</th>
                   <th>ФИО</th>
                   <th>Тел</th>
                   <th>Город</th>
+                  <th>Профессия</th>
+                  <th>Виды работ</th>
                   <th>В бригаде</th>
+                  <th>Замеры</th>
                   <th>Договор</th>
                </tr>
             </thead>
@@ -81,16 +100,30 @@
                   {% else %}
                <tr>
                   {% endif %}
-
-                  <td><a href="">{{item}}</a></td>
+                   <td>
+                     <div class="checkbox checkbox-info">
+                        <input id="checkbox{{item.id}}" name="master" value="{{item.id}}" type="checkbox">
+                        <label for="checkbox{{item.id}}">{{item.id}}</label>
+                     </div>
+                  </td>
+                  <td><a href="{% url 'masters:master_detail' pk=item.id %}">{{item}}</a></td>
                   <td>{{item.phone}}</td>
-                  <td>{% for item in item.city.all %}{{item}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.city.all %}{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.profession.all %}{{i.id}}.{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.profession.all %}{{i.id}}.{% for x in i.work_set.all %}{{x}}, {% endfor %}<br/>{% endfor %}</td>
                   <td>{{item.size}}</td>
+                  <td>{% if item.zamer %}Да{% else %}Нет{% endif %}</td>
                   <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
                </tr>
                {% endfor %}
             </tbody>
          </table>
+         <div class="col-md-12 form-group user-form-group">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-add btn-sm">Назначить исполнителя</button>
+                    </div>
+                </div>
+         </form>
         </div>
    </div>
 </div>

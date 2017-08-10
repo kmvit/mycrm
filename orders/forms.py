@@ -11,11 +11,6 @@ class OrderAddForm(ModelForm):
             'work': SelectMultiple()
         }
 
-    def __init__(self, *args, **kwargs):
-        super(OrderAddForm, self).__init__(*args, **kwargs)
-        for myField in self.fields:
-            self.fields[myField].widget.attrs['class'] = 'form-control'
-        self.fields['contract'].widget.attrs.update({'class': 'myfieldclass'})
 
 class OrderEditForm(ModelForm):
     class Meta:

@@ -17,6 +17,12 @@
       </div>
        <div class="pull-right">
          <form action="{% url 'masters:master_filter' %}" method="GET">
+             <select name="city-select">
+               <option value="all">Все</option>
+                {% for item in city_list %}
+                    <option value="{{item.id}}">{{item}}</option>
+                {% endfor %}
+            </select>
              <select name="select">
                <option value="all">Все</option>
                 {% for item in profession_list %}
@@ -34,23 +40,35 @@
          <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
             <thead>
                <tr class="info">
+                  <th>Номер</th>
                   <th>ФИО</th>
-        <th>Тел</th>
-        <th>Город</th>
-        <th>В бригаде</th>
-        <th>Договор</th>
+                  <th>Тел</th>
+                  <th>Город</th>
+                  <th>Профессия</th>
+                  <th>Виды работ</th>
+                  <th>В бригаде</th>
+                  <th>Замеры</th>
+                  <th>Договор</th>
                </tr>
             </thead>
             <tbody>
-               {% for item in master_list %}
-      <tr>
-        <td><a href="{% url 'masters:master_detail' pk=item.id%}">{{item.fio}}</a></td>
-        <td>{{item.phone}}</td>
-        <td>{% for item in item.city.all %}{{item}}<br/>{% endfor %}</td>
-        <td>{{item.size}}</td>
-        <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
-      </tr>
-    {% endfor %}
+               {% for item in master_list%}
+               {% if order.master_changed == item.id %}
+               <tr class="success">
+                  {% else %}
+               <tr>
+                  {% endif %}
+                   <td>{{item.id}}</td>
+                  <td><a href="{% url 'masters:master_detail' pk=item.id %}">{{item}}</a></td>
+                  <td>{{item.phone}}</td>
+                  <td>{% for i in item.city.all %}{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.profession.all %}{{i.id}}.{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.profession.all %}{{i.id}}.{% for x in i.work_set.all %}{{x}}, {% endfor %}<br/>{% endfor %}</td>
+                  <td>{{item.size}}</td>
+                  <td>{% if item.zamer %}Да{% else %}Нет{% endif %}</td>
+                  <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
+               </tr>
+               {% endfor %}
             </tbody>
          </table>
       </div>

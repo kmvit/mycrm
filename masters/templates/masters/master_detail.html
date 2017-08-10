@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% block content %}
 <div class="panel panel-bd lobidisable">
@@ -12,34 +11,47 @@
    <div class="panel-body">
       <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
       <div class="btn-group">
-
       </div>
       <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
       <div class="table-responsive">
          <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
             <thead>
                <tr class="info">
-                  <th>ФИО</th> 
-        <th>Телефон</th>
-          <th>Город</th>
-        <th>Профессия</th>
-          <th>Виды работ</th>
-        <th>Бригада</th>
-        <th>Договор</th>
+                  <th>Номер</th>
+                  <th>ФИО</th>
+                  <th>Телефон</th>
+                  <th>Город</th>
+                  <th>Профессия</th>
+                  <th>Виды работ</th>
+                  <th>Бригада</th>
+                  <th>Замер</th>
+                  <th>Договор</th>
                </tr>
             </thead>
             <tbody>
-            
-      <tr>
-        <td>{{master.fio}}</td>
-        <td>{{master.phone}}</td>
-          <td>{% for item in master.city.all %}<p>{{item}}</p>{%endfor%}</td>
-           <td>{{master.profession}}</td>
-        <td>{% for item in master.work.all %}<p>{{item}}</p>{%endfor%}</td>
-           <td>{{master.size}}</td>
-          <td>{% if master.contract %}Да{% else %}Нет{% endif %}</td>
-      </tr>
-  
+               <tr>
+                  <td>{{master.id}}</td>
+                  <td>{{master.fio}}</td>
+                  <td>{{master.phone}}</td>
+                  <td>
+                     {% for item in master.city.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                   <td>
+                     {% for item in master.profession.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>
+                     {% for item in master.work.all %}
+                     <p>{{item}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>{{master.size}}</td>
+                  <td>{% if master.zamer %}Да{% else %}Нет{% endif %}</td>
+                  <td>{% if master.contract %}Да{% else %}Нет{% endif %}</td>
+               </tr>
             </tbody>
          </table>
       </div>

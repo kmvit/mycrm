@@ -9,6 +9,7 @@ from django.views.generic import ListView, DeleteView, DetailView, CreateView, U
 from .forms import *
 from urllib.request import Request, urlopen
 from urllib.parse import quote
+from datetime import datetime
 
 # Create your views here.
 @method_decorator(login_required, name='dispatch')
@@ -36,18 +37,6 @@ class OrderEdit(UpdateView):
     model = Order
     form_class = OrderEditForm
     template_name = 'orders/order_edit.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super(OrderEdit, self).get_context_data(**kwargs)
-        if self.object.master_send_sms:
-            context['master_list'] = Master.objects.filter(id__in=self.object.master_send_sms.all())
-        return context
-    
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.master_changed = self.request.POST.get('master_changed')
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self):
         return reverse('orders:order_detail', kwargs={'pk': self.object.id})
@@ -120,6 +109,7 @@ def order_master_chenged(request, order_id):
     order = Order.objects.get(id=order_id)
     if 'master' in request.POST:
         order.master_changed = request.POST.get('master')
+        order.start = datetime.now()
         order.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:

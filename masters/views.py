@@ -36,6 +36,7 @@ class MasterList(ListView):
         context = super(MasterList, self).get_context_data(**kwargs)
         context['work_list'] = Work.objects.all()
         context['profession_list'] = Profession.objects.all()
+        context['city_list'] = City.objects.all()
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -48,14 +49,28 @@ class MasterAdd(CreateView):
     form_class = MasterAddForm
     success_url = '/masters'
     
+    def get_context_data(self, **kwargs):
+        context = super(MasterAdd, self).get_context_data(**kwargs)
+        context['city_list'] = City.objects.all()
+        context['work_list'] = Work.objects.all()
+        context['profession_list'] = Profession.objects.all()
+        return context
 
 def master_filter(request):
     """Фильтр мастеров"""
-    if 'select' in request.GET and request.GET['select']=='all':
-        master_list = Master.objects.all()
-    else:
-        master_list = Master.objects.filter(work = request.GET.get('select'))
+    if 'select' in request.GET and 'city-select' in request.GET:
+        select = request.GET['select']
+        city = request.GET['city-select']
+        if select == "all" and city == "all":
+            master_list = Master.objects.all()
+        elif select == 'all':
+            master_list = Master.objects.filter(city__id = city)
+        elif city == 'all':
+            master_list = Master.objects.filter(work = select)
+        else:
+            master_list = Master.objects.filter(work = request.GET.get('select'), city__id = request.GET.get('city-select'))
     work_list = Work.objects.all()
+    city_list = City.objects.all()
     profession_list = Profession.objects.all()
-    context = {'master_list':master_list, 'work_list':work_list, 'profession_list':profession_list}
+    context = {'master_list':master_list, 'work_list':work_list, 'profession_list':profession_list , 'city_list':city_list}
     return render(request, 'masters/master_list.html', context)

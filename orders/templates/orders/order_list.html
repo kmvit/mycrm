@@ -20,7 +20,9 @@
             <select name="select">
                <option selected value="all">Все</option>
                <option value="1">Выполнен</option>
-               <option value="2">Невыполнен</option>
+               <option value="2">В работе</option>
+               <option value="3">Невыполнен</option>
+               <option value="4">Отказ</option>
             </select>
             <button type="submit" class="btn btn-add btn-sm">Фильтровать</button>
          </form>
@@ -32,7 +34,17 @@
                <tr class="info">
                   <th>Номер заказа</th>
                   <th>Дата</th>
+                  <th>Клиент</th>
+                  <th>Телефон</th>
+                  <th>Город</th>
+                  <th>Вид работ</th>
+                  <th>Объем</th>
+                  <th>Передали</th>
+                  <th>Взял</th>
+                  <th>Начало работ</th>
+                  <th>Примечания</th>
                   <th>Статус</th>
+                  <th>Вход</th>
                   <th>Действия</th>
                </tr>
             </thead>
@@ -41,7 +53,29 @@
                <tr>
                   <td><a href="{% url 'orders:order_detail' pk=item.id%}">{{item.id}}</a></td>
                   <td>{{item.born}}</td>
-                  <td>{% if item.status == '1' %}<span class="label-custom label label-default">Выполнен</span>{% else %}<span class="label-warning label label-default">Невыполнен</span>{% endif %}</td>
+                  <td>{{item.fio}}</td>
+                  <td>{{item.phone}}</td>
+                  <td>
+                     {% for i in item.city.all %}
+                     {{i}}
+                     {%endfor%}
+                  </td>
+                  <td>
+                     {% for i in item.work.all %}
+                     <p>{{i}}</p>
+                     {%endfor%}
+                  </td>
+                  <td>{{item.size}}</td>
+                  <td>
+                     {% for i in item.master_send_sms.all %}
+                        {{i.id}},
+                     {%endfor%}
+                  </td>
+                  <td>{{item.master_changed|default:"Пусто"}}</td>
+                  <td>{{item.start}}</td>
+                  <td>{{item.description}}</td>
+                  <td>{{item.get_status_display}}</td>
+                  <td>{{item.enter}}</td>
                   <td>
                      <a class="btn btn-add btn-xs" href="{% url 'orders:order_edit' pk=item.id %}"><i class="fa fa-pencil"></i></a>
                      <a class="btn btn-danger btn-xs" href="{% url 'orders:order_delete' pk=item.id %}"><i class="fa fa-trash-o"></i> </a>

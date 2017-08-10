@@ -1,15 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST" action="" _lpchecked="1">
    {% csrf_token %}
    <fieldset>
       <!-- Text input-->
-      {% for field in form %}
       <div class="col-md-6 form-group">
-         <label class="control-label">{{field.label}}</label>
-         {{field}}
+         <label class="control-label">ФИО</label>
+         <input type="text" name="fio" required="" id="id_fio" class="form-control" maxlength="300">
       </div>
-      {% endfor %}
+      <div class="col-md-6 form-group">
+         <label class="control-label">Телефон</label>
+         <input type="text" name="phone" required="" id="id_phone" class="form-control" maxlength="12">
+      </div>
+      <div class="col-md-6 form-group">
+         <label class="control-label">Город</label>
+         <select name="city" required="" id="id_city" class="form-control" multiple="multiple">
+             {% for item in city_list %}
+            <option value="{{item.id}}">{{item}}</option>
+            {% endfor %}
+         </select>
+      </div>
+      <div class="col-md-6 form-group">
+         <label class="control-label">Договор</label>
+         <input type="checkbox" name="contract" id="id_contract" class="myfieldclass">
+      </div>
+      <div class="col-md-6 form-group">
+         <label class="control-label">Замеры</label>
+         <input type="checkbox" name="zamer" id="id_zamer" class="myfieldclass">
+      </div>
+      <div class="col-md-6 form-group">
+         <label class="control-label">Человек в бригаде</label>
+         <input type="number" name="size" required="" id="id_size" class="form-control">
+      </div>
+      <div class="col-md-6 form-group">
+         <label class="control-label">Профессия:</label><br/>
+         
+             {% for item in profession_list %}
+             <label class="control-label">{{item}}</label>
+             <input name="profession" class="check_box" type="checkbox" data-ptag="sb{{item.id}}" id="chk{{item.id}}" value="{{item.id}}"><br/>
+            {% endfor %}
+   
+      </div>
+      <div class="col-md-6 form-group master-block-prof">
+         <label class="control-label">Виды работ</label>
+         {% for item in profession_list %}
+         <p id="sb{{item.id}}"  class="p_element"> 
+                {% for i in item.work_set.all %}
+                 
+                    <label class="control-label">{{i}}</label>
+                    <input name="work" class="check_box" type="checkbox" value="{{i.id}}">
+               
+                {% endfor %}
+                 </p>
+        {% endfor %}
+      </div>
+      
       <div class="col-md-12 form-group user-form-group">
          <div class="pull-right">
             <button type="submit" class="btn btn-add btn-sm">Добавить</button>
@@ -17,4 +62,30 @@
       </div>
    </fieldset>
 </form>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.check_box').change(function(){
+    if($('.check_box:checked').length==0){
+        $('.p_element').show();
+    }else{
+        $('.p_element').hide();
+        $('.check_box:checked').each(function(){
+            $('#'+$(this).attr('data-ptag')).show();
+        });
+    }
+    
+});
+   });
+
+</script>
+<style>
+   #subcategory optgroup {
+   display: none;
+   }
+   #subcategory .1 {
+   display: block;
+   }
+</style>
 {% endblock %}

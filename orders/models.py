@@ -38,18 +38,22 @@ from masters.models import Master
 class Order(models.Model):
     born = models.DateTimeField(default=datetime.now, verbose_name='Дата')
     fio = models.CharField(max_length=300, verbose_name='ФИО')
+    phone = models.CharField(max_length=11, default='79289999999', verbose_name='Телефон')
     city = models.ManyToManyField(City, verbose_name='Город')
     work = models.ManyToManyField(Work, verbose_name='Виды работ')
     size = models.IntegerField(verbose_name='Объем')
+    start = models.DateTimeField(blank=True, verbose_name='Начало работ')
     description = models.TextField(verbose_name='Примечания')
-    contract = models.BooleanField(default=False, verbose_name='Договор')
     master_send_sms = models.ManyToManyField(Master, blank=True, verbose_name='Кому отправить СМС')
     master_changed = models.IntegerField(blank=True,null=True, verbose_name='Мастер исполнитель')
     CHOICES = (
     (u'1', u'Выполнен'),
-    (u'2', u'Невыполнен')
+    (u'2', u'В работе'),
+    (u'3', u'Невыполнен'),
+    (u'4', u'Отказ'),
     )
-    status = models.CharField(max_length=10, choices=CHOICES, default=2, verbose_name='Статус')
+    status = models.CharField(max_length=10, choices=CHOICES, verbose_name='Статус')
+    enter = models.CharField(max_length=300, verbose_name="Вход")
 
     
     class Meta:
