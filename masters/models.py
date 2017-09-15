@@ -5,7 +5,7 @@ from orders.models import City, Work, Profession
 
 class Master(models.Model):
     fio = models.CharField(max_length=300, verbose_name='ФИО')
-    phone = models.CharField(max_length=12, verbose_name='Телефон')
+    phone = models.CharField(max_length=12, unique =True, verbose_name='Телефон')
     city = models.ManyToManyField(City, verbose_name='Город')
     profession = models.ManyToManyField(Profession, verbose_name='Профессия')
     work = models.ManyToManyField(Work, verbose_name='Виды работ')

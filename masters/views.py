@@ -2,9 +2,10 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
+from orders.models import Order
 
 
 @login_required
@@ -37,6 +38,7 @@ class MasterList(ListView):
         context['work_list'] = Work.objects.all()
         context['profession_list'] = Profession.objects.all()
         context['city_list'] = City.objects.all()
+        context['order_finish'] = Order.objects.filter(status = '1')
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -56,6 +58,19 @@ class MasterAdd(CreateView):
         context['profession_list'] = Profession.objects.all()
         return context
 
+
+@method_decorator(login_required, name='dispatch')
+class MasterUpdate(UpdateView):
+    model = Master
+    form_class = MasterAddForm
+    success_url = '/masters'
+    template_name = 'masters/master_edit.html'
+    
+@method_decorator(login_required, name='dispatch')
+class MasterDelete(DeleteView):
+    model = Master
+    success_url = '/masters'
+
 def master_filter(request):
     """Фильтр мастеров"""
     if 'select' in request.GET and 'city-select' in request.GET:
@@ -66,11 +81,17 @@ def master_filter(request):
         elif select == 'all':
             master_list = Master.objects.filter(city__id = city)
         elif city == 'all':
-            master_list = Master.objects.filter(work = select)
+            master_list = Master.objects.filter(work__in = request.GET.getlist('select'))
         else:
-            master_list = Master.objects.filter(work = request.GET.get('select'), city__id = request.GET.get('city-select'))
+            master_list = Master.objects.filter(work__in = request.GET.getlist('select'), city__id = request.GET.get('city-select'))
+    elif 'city-select' in request.GET:
+        master_list = Master.objects.filter(city__id = request.GET.get('city-select'))
+    elif 'select' in request.GET:
+        master_list = Master.objects.filter(work__in = request.GET.get('select'))
+    else:
+        master_list = Master.objects.all()
     work_list = Work.objects.all()
     city_list = City.objects.all()
     profession_list = Profession.objects.all()
-    context = {'master_list':master_list, 'work_list':work_list, 'profession_list':profession_list , 'city_list':city_list}
+    context = {'work_list':work_list, 'profession_list':profession_list , 'city_list':city_list, 'master_list':master_list, }
     return render(request, 'masters/master_list.html', context)

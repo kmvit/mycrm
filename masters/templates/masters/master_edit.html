@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" class="address-form form-horizontal" method="post" enctype="multipart/form-data">
+   {% csrf_token %}
+   <fieldset>
+       {% for field in form %}
+       <div class="col-md-6 form-group">
+         {{ field.errors }}
+        {{ field.label_tag }} 
+
+        {{ field }}
+   </div>    
+    {% endfor %}
+   <input type="submit" class="btn btn-primary" value="Добавить">
+   </fieldset>
+   
+
+
+{% endblock %}

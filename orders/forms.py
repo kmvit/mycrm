@@ -6,7 +6,7 @@ class OrderAddForm(ModelForm):
     class Meta:
         model = Order
         fields='__all__'
-        exclude = ['master_send_sms', 'master_changed', 'status']
+        exclude = ['master_send_sms', 'master_changed', 'status', 'start']
         widgets = {
             'work': SelectMultiple()
         }

@@ -42,7 +42,7 @@ class Order(models.Model):
     city = models.ManyToManyField(City, verbose_name='Город')
     work = models.ManyToManyField(Work, verbose_name='Виды работ')
     size = models.IntegerField(verbose_name='Объем')
-    start = models.DateTimeField(blank=True, verbose_name='Начало работ')
+    start = models.DateTimeField(blank=True, null=True, verbose_name='Начало работ')
     description = models.TextField(verbose_name='Примечания')
     master_send_sms = models.ManyToManyField(Master, blank=True, verbose_name='Кому отправить СМС')
     master_changed = models.IntegerField(blank=True,null=True, verbose_name='Мастер исполнитель')
@@ -52,7 +52,7 @@ class Order(models.Model):
     (u'3', u'Невыполнен'),
     (u'4', u'Отказ'),
     )
-    status = models.CharField(max_length=10, choices=CHOICES, verbose_name='Статус')
+    status = models.CharField(max_length=10, default='3', choices=CHOICES, verbose_name='Статус')
     enter = models.CharField(max_length=300, verbose_name="Вход")
 
     

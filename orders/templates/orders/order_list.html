@@ -74,7 +74,7 @@
                   <td>{{item.master_changed|default:"Пусто"}}</td>
                   <td>{{item.start}}</td>
                   <td>{{item.description}}</td>
-                  <td>{{item.get_status_display}}</td>
+                  <td>{% if item.status == '1' %}<span class="label-success">{{item.get_status_display}}</span>{% elif item.status == '2'%}<span class="label-warning">{{item.get_status_display}}</span>{% elif item.status == '3'%}<span class="label-default">{{item.get_status_display}}</span>{% elif item.status == '4'%}<span class="label-danger">{{item.get_status_display}}</span>{% endif %}</td>
                   <td>{{item.enter}}</td>
                   <td>
                      <a class="btn btn-add btn-xs" href="{% url 'orders:order_edit' pk=item.id %}"><i class="fa fa-pencil"></i></a>

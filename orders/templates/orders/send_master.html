@@ -18,34 +18,46 @@
                   <th>ФИО</th>
                   <th>Тел</th>
                   <th>Город</th>
+                  <th>Профессия</th>
+                  <th>Виды работ</th>
                   <th>В бригаде</th>
+                  <th>Замеры</th>
                   <th>Договор</th>
                </tr>
             </thead>
             <tbody>
                {% for item in master_list%}
+               {% if order.master_changed == item.id %}
+               <tr class="success">
+                  {% else %}
                <tr>
-                  <td>
-                     <div class="checkbox checkbox-info">
+                  {% endif %}
+                   <td><div class="checkbox checkbox-info">
                         <input id="checkbox{{item.id}}" name="master" value="{{item.id}}" type="checkbox">
                         <label for="checkbox{{item.id}}">{{item.id}}</label>
-                     </div>
-                  </td>
-                  <td><a href="{% url 'masters:master_detail' pk=item.id%}">{{item}}</a></td>
+                     </div></td>
+                  <td><a href="">{{item}}</a></td>
                   <td>{{item.phone}}</td>
-                  <td>{% for item in item.city.all %}{{item}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.city.all %}{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.profession.all %}{{i.id}}.{{i}}<br/>{% endfor %}</td>
+                  <td>{% for i in item.work.all %}{{i.proffesion.id}}.{{i}}<br/>{% endfor %}</td>
                   <td>{{item.size}}</td>
+                  <td>{% if item.zamer %}Да{% else %}Нет{% endif %}</td>
                   <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
                </tr>
                {% endfor %}
             </tbody>
          </table>
+         
+         
+         
+         
           <div class="panel-heading">
             <div class="btn-group" id="buttonexport">
                 <h4>Сообщение</h4>
             </div>
         </div>
-         <textarea name="message" cols="40" rows="3">{{order.fio}}. {% for item in order.city.all %}{{item}}{% endfor %}. {% for item in order.work.all %}{{item}}{% endfor %}. Телефон: +79283594121</textarea>
+         <textarea name="message" cols="40" rows="3">{% for item in order.city.all %}{{item}}{% endfor %}, {% for item in order.work.all %}{{item}},{% endfor %}{{order.size}}м 89034082828</textarea>
               <div class="col-md-12 form-group user-form-group">
                     <div class="pull-right">
                         <button type="submit" class="btn btn-add btn-sm">Отправить</button>
