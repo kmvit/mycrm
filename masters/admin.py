@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 
 class MasterAdmin(admin.ModelAdmin):
-    list_display = ['fio','phone', 'size', 'contract']
+    list_display = ['id','fio','phone', 'size', 'contract']
     list_filter = ['profession','work', 'city']
 
 admin.site.register(Master, MasterAdmin)

@@ -37,9 +37,10 @@
          <label class="control-label">Профессия:</label><br/>
          
              {% for item in profession_list %}
-             <label class="control-label">{{item}}</label>
-             <input name="profession" class="check_box" type="checkbox" data-ptag="sb{{item.id}}" id="chk{{item.id}}" value="{{item.id}}"><br/>
-            {% endfor %}
+                        
+                         <label class="control-label"><input name="profession" class="check_box" type="checkbox" data-ptag="sb{{item.id}}" id="chk{{item.id}}" value="{{item.id}}"> {{item}}</label><br />
+
+             {% endfor %}
    
       </div>
       <div class="col-md-6 form-group master-block-prof">
@@ -48,9 +49,9 @@
          <p id="sb{{item.id}}"  class="p_element"> 
                 {% for i in item.work_set.all %}
                  
-                    <label class="control-label">{{i}}</label>
-                    <input name="work" class="check_box" type="checkbox" value="{{i.id}}">
-               
+                   
+                  
+                <label class="control-label"><input name="work" class="check_box" type="checkbox" value="{{i.id}}"> {{i}} </label><br />
                 {% endfor %}
                  </p>
         {% endfor %}

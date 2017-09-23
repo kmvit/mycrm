@@ -46,12 +46,11 @@
                   <th>ФИО</th>
                   <th>Тел</th>
                   <th>Город</th>
-                  <th>Профессия</th>
-                  <th>Виды работ</th>
                   <th>В бригаде</th>
                   <th>Замеры</th>
                   <th>Договор</th>
                   <th>Заказы</th>
+                  <th>Примечания</th>
                   <th>Действия</th>
                </tr>
             </thead>
@@ -66,12 +65,13 @@
                   <td><a href="{% url 'masters:master_detail' pk=item.id %}">{{item}}</a></td>
                   <td>{{item.phone}}</td>
                   <td>{% for i in item.city.all %}{{i}}<br/>{% endfor %}</td>
-                  <td>{% for i in item.profession.all %}{{i.id}}.{{i}}<br/>{% endfor %}</td>
-                  <td>{% for i in item.work.all %}{{i.proffesion.id}}.{{i}}<br/>{% endfor %}</td>
                   <td>{{item.size}}</td>
                   <td>{% if item.zamer %}Да{% else %}Нет{% endif %}</td>
                   <td>{% if item.contract %}Да{% else %}Нет{% endif %}</td>
                   <td>{% for i in order_finish %}{% if i.master_changed == item.id %}{{i.id}},{% endif %}{% endfor %}</td>
+                  <td>
+                      {{item.description|safe}}
+                  </td>
                   <td>
                      <a class="btn btn-add btn-xs" href="{% url 'masters:master_edit' pk=item.id %}"><i class="fa fa-pencil"></i></a>
                      <a class="btn btn-danger btn-xs" href="{% url 'masters:master_delete' pk=item.id %}"><i class="fa fa-trash-o"></i> </a>

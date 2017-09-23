@@ -216,3 +216,4 @@ form input[type="text"] { background: #fff; }
     display: inline-block;
     margin: 0 5px;
 }
+.p_element { display: none; }

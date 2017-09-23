@@ -25,6 +25,7 @@
                   <th>Виды работ</th>
                   <th>Бригада</th>
                   <th>Замер</th>
+                  <th>Примечание</th>
                   <th>Договор</th>
                </tr>
             </thead>
@@ -50,6 +51,7 @@
                   </td>
                   <td>{{master.size}}</td>
                   <td>{% if master.zamer %}Да{% else %}Нет{% endif %}</td>
+                  <td>{{master.description}}</td>
                   <td>{% if master.contract %}Да{% else %}Нет{% endif %}</td>
                </tr>
             </tbody>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -95,3 +95,12 @@ def master_filter(request):
     profession_list = Profession.objects.all()
     context = {'work_list':work_list, 'profession_list':profession_list , 'city_list':city_list, 'master_list':master_list, }
     return render(request, 'masters/master_list.html', context)
+
+def change_id(request):
+    masters = Master.objects.all()
+    i = 1
+    for master in masters:
+        master.id = i
+        i+=1
+        master.save()
+    return HttpResponse('ok')

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^add/$', MasterAdd.as_view(), name='master_add'),
     url(r'^filter/$', master_filter, name='master_filter'),
     url(r'^$', MasterList.as_view(), name='master_list'),
+    url(r'^changeid/$', change_id, name='change_id'),
 ]
